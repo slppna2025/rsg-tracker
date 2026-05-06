@@ -107,6 +107,7 @@ body::before {
 .login-dropdown-inner {
   max-width: 600px; margin: 0 auto;
   display: flex; align-items: flex-end; gap: 10px;
+  position: relative; z-index: 201;
 }
 .login-dropdown-label {
   font-size: 11px; font-weight: 600;
@@ -141,11 +142,14 @@ body::before {
   font-family: 'DM Sans', sans-serif;
   font-size: 13px; font-weight: 600;
   padding: 9px 22px; border-radius: 7px; border: none;
-  cursor: pointer; white-space: nowrap;
+  cursor: pointer !important; white-space: nowrap;
   transition: all 0.15s;
   display: flex; align-items: center; gap: 7px;
   flex-shrink: 0; align-self: flex-end;
+  position: relative; z-index: 201;
+  pointer-events: all !important;
 }
+.dd-btn:hover { opacity: 0.9; transform: translateY(-1px); }
 .dd-btn.green { background: var(--green); color: white; }
 .dd-btn.green:hover { background: var(--green-mid); }
 .dd-btn.gold { background: var(--gold); color: white; }
@@ -412,8 +416,8 @@ function toggleDropdown(id) {
   }
 }
 
-// Close dropdown on outside click
-document.addEventListener('click', e => {
+// Close dropdown on outside click — use mousedown so button clicks fire first
+document.addEventListener('mousedown', e => {
   if (!e.target.closest('.login-dropdown') && !e.target.closest('.login-trigger') && !e.target.closest('.nav-logo')) {
     document.querySelectorAll('.login-dropdown').forEach(d => d.classList.remove('open'));
     document.querySelectorAll('.login-trigger').forEach(t => t.classList.remove('active'));
